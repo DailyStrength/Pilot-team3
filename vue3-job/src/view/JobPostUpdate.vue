@@ -139,26 +139,28 @@
         </label>
         <input @change="onFileChange" type="file" id="photo" accept="image/*" />
       </div>
-      <button class="btn-submit">등록하기</button>
+      <button class="btn-submit">수정완료</button>
     </form>
   </div>
 </template>
 
 <script setup>
 import { useAuth } from "../auth/auth";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import supabase from "../supabase";
 import { ref, onMounted, onUnmounted } from "vue";
 import { Icon } from "@iconify/vue";
 
 const { isLogin, user, checkLoginStatus } = useAuth();
-const router = useRouter();
+const router = useRouter(); // 페이지 이동 모듈
+const route = useRoute(); // param 또는 경로 참조
 const isLoading = ref(false);
+console.log("params:", route.params.id);
 
 // 입력 항목
 const title = ref("");
 const todo = ref("");
-const pay_rule = ref("");
+const pay_rule = ref("시급");
 const pay = ref("");
 const desc = ref("");
 const company_name = ref("");
@@ -170,21 +172,25 @@ const tel = ref("");
 const handleSubmit = async () => {
   isLoading.value = true;
 
-  const { error } = await supabase.from("job_posts").insert({
-    title: title.value,
-    todo: todo.value,
-    pay_rule: pay_rule.value,
-    pay: pay.value,
-    desc: desc.value,
-    company_name: company_name.value,
-    location: location.value,
-    tel: tel.value,
-    img_url: "https://placehold.co/400x250",
-  });
+  const { error } = await supabase
+    .from("job_posts")
+    .update({
+      title: title.value,
+      todo: todo.value,
+      pay_rule: pay_rule.value,
+      pay: pay.value,
+      desc: desc.value,
+      company_name: company_name.value,
+      location: location.value,
+      tel: tel.value,
+      img_url: "https://placehold.co/400x250",
+    })
+    .eq("id", route.params.id);
+
   if (error) {
-    alert(error.message || "등록 실패");
+    alert(error.message || "글수정 실패");
   } else {
-    alert("등록 성공");
+    alert("글수정 성공");
     router.push("/job-list");
   }
 
@@ -203,9 +209,31 @@ const onFileChange = (e) => {
   }
 };
 
+// 수정할 글 가져오기
+const getPost = async () => {
+  const { data, error } = await supabase
+    .from("job_posts")
+    .select()
+    .eq("id", route.params.id)
+    .single();
+  console.log("post: ", data);
+
+  // 가져온 데이터를 상태 변수에 저장하여 폼에 표시
+  title.value = data.title;
+  todo.value = data.todo;
+  pay_rule.value = data.pay_rule;
+  pay.value = data.pay;
+  desc.value = data.desc;
+  company_name.value = data.company_name;
+  location.value = data.location;
+  tel.value = data.tel;
+  previewImage.value = data.img_url;
+};
+
 // 마운트시 로그인 상태 확인하기
 onMounted(async () => {
   await checkLoginStatus();
+  getPost();
   // console.log('auth 정보', isLogin.value, user.value.email);
 });
 
