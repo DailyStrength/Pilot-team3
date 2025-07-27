@@ -3,6 +3,9 @@
     <p>로그인 처리중...</p>
   </div>
   <div class="form-container">
+    <div class="img-box">
+      <img src="/oldman.png" alt="oldman" class="login-img" />
+    </div>
     <form @submit.prevent="handleLogin">
       <div class="form-group">
         <label for="email">Email</label>

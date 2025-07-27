@@ -76,13 +76,13 @@
 
       <!-- 6.업체명 -->
       <div class="form-group">
-        <label for="company_name">업체명</label>
+        <label for="company_name">이름</label>
         <input
           type="text"
           id="company_name"
           v-model="company_name"
           required
-          placeholder="예) 땅콩가게"
+          placeholder="예) 홍길동"
         />
       </div>
 

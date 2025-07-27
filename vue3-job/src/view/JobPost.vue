@@ -70,19 +70,19 @@
           v-model="desc"
           rows="4"
           required
-          placeholder="구체적인 업무 내용, 근무여건, 지원자가 갖추어야 할 능력 등 우대 사항에 대해 알려주세요."
+          placeholder="구체적인 업무 내용, 근무여건, 지원자가 갖추어야 할 능력 등 다양한 사항에 대해 알려주세요."
         ></textarea>
       </div>
 
       <!-- 6.업체명 -->
       <div class="form-group">
-        <label for="company_name">업체명</label>
+        <label for="company_name">성함</label>
         <input
           type="text"
           id="company_name"
           v-model="company_name"
           required
-          placeholder="예) 땅콩가게"
+          placeholder="예) 홍길동"
         />
       </div>
 
@@ -94,7 +94,7 @@
           id="location"
           v-model="location"
           required
-          placeholder="예) 서울시 강남구 논현동"
+          placeholder="예) 대구시 수성구 황금동"
         />
       </div>
 
