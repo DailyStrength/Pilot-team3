@@ -15,7 +15,12 @@
           <p class="pay">
             {{ post.pay_rule }}: {{ post.pay.toLocaleString() }}원
           </p>
-          <img :src="post.img_url" alt="image" width="64" height="64" />
+          <img
+            :src="post.img_url || '/oldman.png'"
+            alt="image"
+            width="64"
+            height="64"
+          />
         </div>
       </router-link>
     </li>

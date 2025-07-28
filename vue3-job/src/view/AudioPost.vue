@@ -248,6 +248,8 @@ const extractFieldsWithGPT = async (text) => {
     return JSON.parse(result.choices[0].message.content);
   } catch (e) {
     console.error("GPT 응답 파싱 실패:", result);
+    console.log("API KEY: ", import.meta.env.VITE_OPENAI_API_KEY);
+
     return null;
   }
 };

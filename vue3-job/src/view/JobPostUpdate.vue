@@ -214,6 +214,7 @@ const handleSubmit = async () => {
   }
 
   isLoading.value = false;
+  console.log("img_url before update:", img_url.value);
 };
 
 const onFileChange = (e) => {
@@ -250,21 +251,25 @@ const getPost = async () => {
 };
 
 const uploadImage = async () => {
+  const fileExt = file.name.split(".").pop();
+  const fileName = `${Date.now()}.${fileExt}`;
+
   const { data, error } = await supabase.storage
     .from("images")
-    .upload(file.name, file, {
+    .upload(fileName, file, {
       cacheControl: "3600",
       upsert: false,
     });
 
   if (error) {
     alert("업로드 오류");
+    console.error("업로드 실패:", error);
   } else {
     console.log("uploaded file:", data);
     // 이미지 url 가져오기
     const { data: imgData } = supabase.storage
       .from("images")
-      .getPublicUrl(file.name);
+      .getPublicUrl(fileName);
     console.log("file url:", imgData.publicUrl);
 
     // 테이블에 저장할 이미지 URL 변수

@@ -71,7 +71,7 @@ watch(route, (newPath) => {
   } else if (currentPath === "/signup") {
     title.value = "회원가입";
   } else if (currentPath === "/job-list") {
-    title.value = "효자손 구인구직";
+    title.value = " ";
   } else if (currentPath.startsWith("/job-detail")) {
     title.value = "상세보기";
   } else if (currentPath === "/job-post") {
