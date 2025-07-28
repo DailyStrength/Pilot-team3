@@ -1,7 +1,7 @@
 <template>
   <section v-if="isLogin && post">
     <figure>
-      <img :src="post.img_url" alt="head image" />
+      <img :src="post.img_url || '/oldman.png'" alt="head image" />
     </figure>
 
     <!-- 상세정보 -->
